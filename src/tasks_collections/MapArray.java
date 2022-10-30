@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class MapArray {
 
-    public  <K> java.util.Map<K, Integer> ArrayToMap(K[] array) {
+    public  <K> Map<K, Integer> ArrayToMap(K[] array) {
         Map<K, Integer> map = new HashMap<>();
         int counter = 0;
         for (int i = 0; i < array.length; i++) {
