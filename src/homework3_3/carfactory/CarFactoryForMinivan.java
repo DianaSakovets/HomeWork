@@ -1,20 +1,27 @@
 package homework3_3.carfactory;
 
+import homework3_3.car.Car;
 import homework3_3.car.CarMinivan;
-import homework3_3.components.color.ColorSedan;
 import homework3_3.components.model.ModelMinivan;
 import homework3_3.components.color.ColorMinivan;
 import homework3_3.components.wheelsize.WheelSizeMinivan;
 import homework3_3.components.enginevolume.EngineVolumeMinivan;
 import homework3_3.components.option.Options;
-import homework3_3.components.Assembling—ountry;
+import homework3_3.components.additionalcomponent.Assembling—ountry;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class CarFactoryForMinivan {
+public class CarFactoryForMinivan <
+        A extends ModelMinivan,
+        B extends ColorMinivan,
+        C extends WheelSizeMinivan,
+        D extends EngineVolumeMinivan,
+        E extends Assembling—ountry
+        >
+        extends Factory<A, B, C, D, E >{
     private final List<CarMinivan> stockForMinivan = new ArrayList<>();
 
     public CarFactoryForMinivan(ModelMinivan model, ColorMinivan color, int year, WheelSizeMinivan wheelSize, EngineVolumeMinivan engineVolume, Set<Options> options, Assembling—ountry assembling—ountry) {
@@ -53,7 +60,6 @@ public class CarFactoryForMinivan {
         stockForMinivan.add(carFord);
     }
 
-
     public void getListOfModelsForMinivan() {
         for (ModelMinivan model : ModelMinivan.values()) {
             System.out.println("MinivanModel: " + model);
@@ -82,17 +88,18 @@ public class CarFactoryForMinivan {
         System.out.println("\n");
     }
 
-    public CarMinivan createCarMinivan(ModelMinivan model, ColorMinivan color, int year, WheelSizeMinivan wheelSize, EngineVolumeMinivan engineVolume, Set<Options> options, Assembling—ountry assembling—ountry) {
+    public Car createCar(A model, B color, int year, C wheelSize, D engineVolume, Set<Options> options, E additionalComponent) {
         for (CarMinivan car : stockForMinivan) {
             if (model == car.getModel()
                     && color == car.getColor()
+                    && year == car.getYear()
                     && wheelSize == car.getWheelSize()
                     && engineVolume == car.getEngineVolume()
-                    && assembling—ountry == car.getAssembling—ountry()) {
+                    && (Assembling—ountry) additionalComponent == car.getAdditionalComponent()) {
                 return car;
             }
             stockForMinivan.remove(car);
         }
-        return new CarMinivan(model, color, year, wheelSize, engineVolume, options, assembling—ountry);
+        return new CarMinivan(model, color, year, wheelSize, engineVolume, options, additionalComponent);
     }
 }

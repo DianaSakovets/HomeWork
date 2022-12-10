@@ -1,20 +1,27 @@
 package homework3_3.carfactory;
 
 
+import homework3_3.car.Car;
 import homework3_3.car.CarTruck;
 import homework3_3.components.model.ModelTruck;
 import homework3_3.components.color.ColorTruck;
 import homework3_3.components.wheelsize.WheelSizeTruck;
 import homework3_3.components.enginevolume.EngineVolumeTruck;
 import homework3_3.components.option.Options;
-import homework3_3.components.FuelType;
+import homework3_3.components.additionalcomponent.FuelType;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class CarFactoryForTruck {
+public class CarFactoryForTruck<A extends ModelTruck,
+        B extends ColorTruck,
+        C extends WheelSizeTruck,
+        D extends EngineVolumeTruck,
+        E extends FuelType
+        >
+        extends Factory<A, B, C, D, E >{
     private final List<CarTruck> stockForTruck = new ArrayList<>();
 
     public CarFactoryForTruck(ModelTruck model, ColorTruck color, int year, WheelSizeTruck wheelSize, EngineVolumeTruck engineVolume, Set<Options> options, FuelType fuelType) {
@@ -81,18 +88,20 @@ public class CarFactoryForTruck {
         System.out.println("\n");
     }
 
-    public CarTruck createCarTruck(ModelTruck model, ColorTruck color, int year, WheelSizeTruck wheelSize, EngineVolumeTruck engineVolume, Set<Options> options, FuelType fuelType) {
+
+    @Override
+    public Car createCar(A model, B color, int year, C wheelSize, D engineVolume, Set<Options> options, E additionalComponent) {
         for (CarTruck car : stockForTruck) {
             if (model == car.getModel()
                     && color == car.getColor()
                     && year == car.getYear()
                     && wheelSize == car.getWheelSize()
                     && engineVolume == car.getEngineVolume()
-                    && fuelType == car.getFuelType()) {
+                    && (FuelType) additionalComponent == car.getAdditionalComponent()) {
                 return car;
             }
             stockForTruck.remove(car);
         }
-        return new CarTruck(model, color, year, wheelSize, engineVolume, options, fuelType);
+        return new CarTruck(model, color, year, wheelSize, engineVolume, options, additionalComponent);
     }
 }

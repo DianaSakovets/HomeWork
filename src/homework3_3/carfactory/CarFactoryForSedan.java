@@ -1,19 +1,27 @@
 package homework3_3.carfactory;
 
+import homework3_3.car.Car;
 import homework3_3.car.CarSedan;
 import homework3_3.components.model.ModelSedan;
 import homework3_3.components.color.ColorSedan;
 import homework3_3.components.wheelsize.WheelSizeSedan;
 import homework3_3.components.enginevolume.EngineVolumeSedan;
 import homework3_3.components.option.Options;
-import homework3_3.components.HeadlightType;
+import homework3_3.components.additionalcomponent.HeadlightType;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class CarFactoryForSedan {
+public class CarFactoryForSedan <
+        A extends ModelSedan,
+        B extends ColorSedan,
+        C extends WheelSizeSedan,
+        D extends EngineVolumeSedan,
+        E extends HeadlightType
+        >
+        extends Factory<A, B, C, D, E >{
     private final List<CarSedan> stockForSedan = new ArrayList<>();
 
     public CarFactoryForSedan(ModelSedan model, ColorSedan color, int year, WheelSizeSedan wheelSize, EngineVolumeSedan engineVolume, Set<Options> options, HeadlightType headlightType) {
@@ -80,18 +88,18 @@ public class CarFactoryForSedan {
         System.out.println("\n");
     }
 
-    public CarSedan createCarSedan(ModelSedan model, ColorSedan color, int year, WheelSizeSedan wheelSize, EngineVolumeSedan engineVolume, Set<Options> options, HeadlightType headlightType) {
+    public Car createCar(A model, B color, int year, C wheelSize, D engineVolume, Set<Options> options, E additionalComponent) {
         for (CarSedan car : stockForSedan) {
             if (model == car.getModel()
                     && color == car.getColor()
                     && year == car.getYear()
                     && wheelSize == car.getWheelSize()
                     && engineVolume == car.getEngineVolume()
-                    && headlightType == car.getHeadlightType()) {
+                    && (HeadlightType) additionalComponent == car.getAdditionalComponent()) {
                 return car;
             }
             stockForSedan.remove(car);
         }
-        return new CarSedan(model, color, year, wheelSize, engineVolume, options, headlightType);
+        return new CarSedan(model, color, year, wheelSize, engineVolume, options, additionalComponent);
     }
 }

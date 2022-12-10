@@ -1,7 +1,6 @@
 package homework3_3.car;
 
-import homework3_3.components.HeadlightType;
-import homework3_3.components.color.Color;
+import homework3_3.components.additionalcomponent.HeadlightType;
 import homework3_3.components.model.ModelSedan;
 import homework3_3.components.color.ColorSedan;
 import homework3_3.components.wheelsize.WheelSizeSedan;
@@ -15,11 +14,8 @@ public class CarSedan extends Car {
     protected HeadlightType headlightType;
 
     public CarSedan(ModelSedan model, ColorSedan color, int year, WheelSizeSedan wheelSize, EngineVolumeSedan engineVolume, Set<Options> options, HeadlightType headlightType) {
-        super(model, color, year, wheelSize, engineVolume, options);
-        this.headlightType = headlightType;
+        super(model, color, year, wheelSize, engineVolume, options, headlightType);
     }
-
-
 
     public HeadlightType getHeadlightType() {
         return headlightType;
@@ -28,4 +24,5 @@ public class CarSedan extends Car {
     public void setHeadlightType(HeadlightType headlightType) {
         this.headlightType = headlightType;
     }
+
 }
